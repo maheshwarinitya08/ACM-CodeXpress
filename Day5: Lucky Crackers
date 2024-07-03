@@ -1,0 +1,83 @@
+/* Day 5: Lucky Crackers
+
+Ram is celebrating Diwali with his family and friends. He has a box of firecrackers that contains different types of firecrackers, such as rockets, chakris, anaars, and phuljharis. Each firecracker has a number written on it, which represents its loudness level. The loudness level of each firecracker is given in the form of an array L of N positive integers.
+
+He also has an array of auspicious numbers A of M numbers that are considered lucky for Diwali. The luckiness score of an auspicious number is the number of firecrackers in the box that have a loudness level divisible by that auspicious number.
+
+Your task is to print the auspicious number with the maximum luckiness score. If there is more than one auspicious number with the maximum score, print the minimum of them.
+
+Input Format
+
+The first line gives T, the number of testcases
+The first line of each testcase denotes N and M.
+The second line of each testcase will give array L where L[i] denotes the loudness of ith cracker.
+The third line of each testcase will give array A where A[i] is the ith auspicious number.
+Constraints
+
+1<=T<=500
+1<=M<=1000
+1<=N<=1000
+1<=L[i]<=100,000
+1<=A[i]<=100,000
+Output Format
+
+For each testcase print the auspicious number with the maximum luckiness score. If there is more than one auspicious number with the maximum score, print the minimum of them.
+
+Sample Input 0
+
+1
+5 3
+4 7 9 3 9
+5 2 3
+Sample Output 0
+
+3
+Explanation 0
+
+The luckiness score for every auspicious number in divisors is:
+The luckiness score of A[0] is 0 since no number in L is divisible by 5.
+The luckiness score of A[1] is 1 since L[0] is divisible by 2.
+The luckiness score of A[2] is 3 since L[2], L[3], and L[4] are divisible by 3.
+Since A[2] has the maximum divisibility score, we return it.*/
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int T;
+    scanf("%d",&T);
+    
+    for(int i=0;i<T;i++){
+        int N,M;
+        scanf("%d",&N);
+        scanf("%d",&M);
+        int L[10000];
+        for(int i=0;i<N;i++){
+            scanf("%d",&L[i]);
+        }
+        int A[10000];
+        for(int i=0;i<M;i++){
+            scanf("%d",&A[i]);
+        }
+        int max_score = -1, auspicious_num = A[0];
+        for (int i = 0; i < M; i++) {
+            int l_score = 0;
+            for (int j = 0; j < N; j++) {
+                if (L[j] % A[i] == 0) {
+                    l_score++;
+                }
+            }
+            if (l_score > max_score || (l_score == max_score && A[i] < auspicious_num)) {
+                max_score = l_score;
+                auspicious_num = A[i];
+            }
+        }
+
+        printf("%d\n", auspicious_num);
+}
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
