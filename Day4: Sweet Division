@@ -1,0 +1,81 @@
+/* Day 4: Sweet Division
+Raj and Priya love celebrating Diwali by giving sweets to their neighbors. This year, they have an array of positive integers L that represents the number of sweets they gave to each house on their street. Raj wants to know if there's a house in the street where, if you split the array into two parts at that house, both parts would have the same total number of sweets. In other words, he wants to find a house where they can say they've divided the sweets equally. Help Raj in finding the house following the above mentioned conditions by writing the program which -
+
+Print the index of the house, if such a house exists.
+Print -1 if no such house exists.
+If there are multiple such houses, the program should print the index of the leftmost one.
+Input Format
+
+The First Line will denote the number of testcases T.
+The First Line of each testcase will give the number of elements in the array N.
+The second Line of each testcase is the array L.
+Constraints
+
+1<=T<=500
+1<=N<=10,000
+1<=L[i]<=10,000
+Output Format
+
+Print the index of the house, if such a house exists.
+Print -1 if no such house exists.
+If there are multiple such houses, the program should print the index of the leftmost one.
+Sample Input 0
+
+1
+5
+2 4 1 3 3
+Sample Output 0
+
+2
+Explanation 0
+
+Sum of the sweets given to houses at index 0 and 1= L[0] + L[1] = 6
+Sum of the sweets given to houses at index 3 and 4= L[3] + L[4]= 6
+As the sweets get equally distributed around the house at index 2, the output is 2
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    for(int i=0;i<T;i++) {
+        int N;
+        scanf("%d", &N);
+        int L[10000];
+        for (int i = 0; i < N; i++) {
+            scanf("%d", &L[i]);
+        }
+        int total_sum = 0;
+        for (int i = 0; i < N; i++) {
+            total_sum += L[i];
+        }
+        int l_sum = 0;
+        int r_sum = total_sum;
+        int found = 0;
+        int result = -1;
+        for (int i = 0; i < N; i++) {
+            r_sum -= L[i];
+            if (l_sum == r_sum) {
+                result = i;
+                found = 1;
+                break;
+            }
+            l_sum += L[i];
+        }
+
+        if (found) {
+            printf("%d\n", result);
+        } else {
+            printf("-1\n");
+        }
+    }
+
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
