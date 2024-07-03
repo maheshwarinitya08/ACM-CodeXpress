@@ -1,0 +1,75 @@
+/* Day 10: Pruning Palindrome
+Dev has a palindromic string of lowercase English letters palindrome, he needs to perform a pruning operation on string that is to replace exactly one character with any lowercase English letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.
+
+Help Dev write a code that outputs the resulting string after performing pruning operation. If there is no way to replace a character to make it not a palindrome, output -1.
+
+Input Format
+
+The first line will be T, the number of testcases.
+Each testcase will provide a palindromic string that needs to be pruned.
+Constraints
+
+1<=T<=1000
+1 <= palindrome.length <= 1000
+palindrome consists of only lowercase English letters.
+Output Format
+
+For each testcase output the lexicographically smallest resulting (non palindromic) string after pruning operation.
+Sample Input 0
+
+1
+azbbza
+Sample Output 0
+
+aabbza
+Explanation 0
+
+There are many ways to make "azbbza" not a palindrome, such as "zzbbza", "aabbza", and "azabza".
+Of all the ways, "aabbza" is the lexicographically smallest.
+Sample Input 1
+
+1
+a
+Sample Output 1
+
+-1 */
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int T;
+    scanf("%d",&T);
+    for(int i=0;i<T;i++){
+        char s[1000];
+        scanf("%s",s);
+        int n = strlen(s);
+
+        // Check if the given palindrome can be made non-palindromic
+        if (n == 1) {
+            printf("-1\n");
+            continue;
+        }
+        int flag=0;
+
+        // Find the first position from the left where the character can be changed
+        for (int i = 0; i < n / 2; i++) {
+            if (s[i] != 'a') {
+                s[i] = 'a';
+                flag=1;
+                printf("%s\n", s);
+                break;
+            }
+        }
+        if(!flag && s[n-1]=='a'){
+            s[n - 1] = 'b';
+            printf("%s\n", s);
+        }
+    }
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
+
