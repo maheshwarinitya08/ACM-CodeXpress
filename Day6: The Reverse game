@@ -1,0 +1,66 @@
+/* Day 6: The Reverse Game
+Ram and Priya are playing an amazing game where they take turns and give each other a name. They have to reverse the name given by them to each other from a particular position and speak aloud the new reversed word. Write a program to help them reverse the name.
+
+Input Format
+
+Take T test cases as the input.
+First line of input under each test case should be K, the position to which the String has to be reversed.
+Second line of the input should be the String S.
+Constraints
+
+1<=T<=1000
+1<=S.size()<=1000
+0<=K<=S.size()
+Output Format
+
+Print the new reversed String for each testcase.
+Sample Input 0
+
+2
+3
+captain
+4
+tonystark
+Sample Output 0
+
+pactain
+ynotstark
+Explanation 0
+
+Input String - captain
+reverse from position - 3
+We will reverse the string till the character at position 3 i.e. “p” ; the output will be “pactain”
+Similarly,
+Input String - tonystark
+reverse till position - 4
+Output-ynotstark*/
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+        int T;
+    scanf("%d", &T);
+
+    for(int i=0;i<T;i++) {
+        int K;
+        scanf("%d", &K);
+
+        char S[1000];
+        scanf("%s", S);
+
+        for (int i = 0; i < K / 2; i++) {
+            char temp = S[i];
+            S[i] = S[K - i - 1];
+            S[K - i - 1] = temp;
+        }
+
+        printf("%s\n", S);
+    }
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
+
