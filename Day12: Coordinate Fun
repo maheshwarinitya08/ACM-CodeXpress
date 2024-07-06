@@ -1,0 +1,103 @@
+/* Day 12: Coordinate Fun
+Reena and Meena are playing an interesting game. They start from specific coordinates and take turns giving each other directions. Reena starts at point (x, y), and they follow a series of directions given by instructions through a string s, the instructions are as follows : -
+
+There are following symbols in the String
+N - North direction
+S - South direction
+E - East direction
+W - West direction
+The integers followed by the above symbols in the string signify the distance to be covered in the direction mentioned through the symbols (N,S,E,W).
+Your task is to calculate the Euclidean distance from the origin (0,0) to their final position after following the directions.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give x and y, the initial coordinates.
+The second line of each testcase will be string s, giving the instructions.
+Constraints
+
+1<=T<=1000
+-100,000<=x,y<=100,000
+s only contains numbers, and some alphabets (capital N,E,W,S).
+1<=s.length()<=1000
+Output Format
+
+For each testcase, output the Euclidean distance from the origin (0,0) to the final position with a precision of 2 decimal places.For example if distance is 1.41421 then output 1.41 and if distance is 4 then output 4.00
+
+Sample Input 0
+
+1
+3 4
+N2E3S6
+Sample Output 0
+
+6.00
+Explanation 0
+
+here, initial coordinates x=3, y=4. now first they went north 2 units therefore now coordinates (3,6), now east 3 units coordinates= (6,6), and finally south 6 units so coordinates=(6,0). Now distance from origin = ((6*6)+(0*0))^1/2 = 6 units therefore output is 6.00
+
+Sample Input 1
+
+1
+0 0
+N10S2
+Sample Output 1
+
+8.00 */
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+#include <cctype>
+
+
+
+
+int main() {
+    int T;
+    std::cin >> T;
+
+    while (T--) {
+        int x, y;
+        std::cin >> x >> y;
+
+        std::string s;
+        std::cin >> s;
+
+        int len = s.length();
+
+        for (int i = 0; i < len; i++) {
+            int distance;
+
+            // Check if the next characters form a valid integer
+            if (std::isdigit(s[i + 1]) || (s[i + 1] == '-' && std::isdigit(s[i + 2]))) {
+                std::sscanf(s.c_str() + i + 1, "%d", &distance);
+
+                if (s[i] == 'N') {
+                    y += distance;
+                } else if (s[i] == 'S') {
+                    y -= distance;
+                } else if (s[i] == 'E') {
+                    x += distance;
+                } else if (s[i] == 'W') {
+                    x -= distance;
+                }
+
+                // Skip the digits in the string
+                while (std::isdigit(s[i + 1]) || s[i + 1] == '-') {
+                    i++;
+                }
+            }
+        }
+
+        int final = x * x + y * y;
+        double res = std::sqrt(final);
+        std::cout << std::fixed << std::setprecision(2) << res << std::endl;
+    }
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    return 0;
+}
