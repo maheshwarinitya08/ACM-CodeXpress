@@ -1,0 +1,73 @@
+/* Day 20: Removing Planet Pairs
+Imagine you have a list of numbers that represent the masses of some planets in a solar system in kilograms. You also have a constant k.
+
+In one step, you can choose two planets from the list whose masses add up to k and remove them from the list.
+
+Find the maximum number of steps you can do on the list. (Note:- The planets are imaginary so the mass can be zero).
+
+Input Format
+
+First line will be T, the number of testcases.
+The first line of each testcase will be n, the number of planets in team and k.
+The second line of each testcase will be array masses of n elements.
+Constraints
+
+1<=T<=10^3
+1<=K<=10^8
+1<=n<=10^3
+0<=masses[i]<=10^9
+Output Format
+
+For each testcase output the maximum number of steps you can do on the list.
+
+Sample Input 0
+
+1
+4 5
+1 2 3 4
+Sample Output 0
+
+2
+Explanation 0
+
+Starting with masses = [1,2,3,4]: - Remove planets 1 and 4, then masses = [2,3] - Remove planets 2 and 3, then masses = [] There are no more pairs that sum up to 5, hence a total of 2 operations.*/
+
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        long int k;
+        scanf("%d %ld", &n, &k);
+
+        long int m[n];
+        for (int i = 0; i < n; ++i) {
+            scanf("%ld", &m[i]);
+        }
+
+        int steps = 0;
+        for (int i = 0; i < n; i++) {
+            if (m[i] == 0) {
+                continue; 
+            }
+            for (int j = i + 1; j < n; j++) {
+                if (m[j] == 0) {
+                    continue; 
+                }
+                if (m[i] + m[j] == k) {
+                    steps++;
+                    m[i] = m[j] = 0;
+                    break;
+                }
+            }
+        }
+
+        printf("%d\n", steps);
+    }
+
+    return 0;
+}
+
