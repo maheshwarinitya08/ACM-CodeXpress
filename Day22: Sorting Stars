@@ -1,0 +1,87 @@
+/* Day 22: Sorting Stars
+you have an m x n matrix mat of integers, where each integer represents the brightness of a star in a patch of the sky. A matrix diagonal is a line of stars that forms a diagonal pattern from some star in either the topmost row or leftmost column and going in the bottom-right direction until reaching the edge of the sky. For example, the matrix diagonal starting from mat[2][0], where mat is a 6 x 3 matrix, includes stars mat[2][0], mat[3][1], and mat[4][2].
+
+Given the matrix mat of stars, sort each matrix diagonal in ascending order of brightness and print the resulting matrix of the sky.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give m and n.
+The next lines will provide the matrix.
+Constraints
+
+1<=T<=1000
+1<=m,n<=100
+1<=matrix[i][j]<=100
+Output Format
+
+Sort each matrix diagonal in ascending order of brightness and output the resulting matrix of the sky.
+
+Sample Input 0
+
+1
+3 4
+3 3 1 1
+2 2 1 2
+1 1 1 2
+Sample Output 0
+
+1 1 1 1
+1 2 2 2
+1 2 3 3 */
+
+#include <stdio.h>
+
+int main() {
+    int t, m, n, i, j, diag_index;
+
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d%d", &m, &n);
+        int mat[m][n];
+
+        // Read matrix elements
+        for (i = 0; i < m; i++)
+            for (j = 0; j < n; j++)
+                scanf("%d", &mat[i][j]);
+
+        // Sort diagonals
+        for (diag_index = m - 1; diag_index >= -n + 1; diag_index--) {
+            int d[m + n];
+            int count = 0;
+
+            // Collect diagonal elements
+            for (i = 0; i < m; i++)
+                for (j = 0; j < n; j++)
+                    if (i - j == diag_index)
+                        d[count++] = mat[i][j];
+
+            // Sort diagonal elements
+            for (i = 0; i < count - 1; i++)
+                for (j = 0; j < count - i - 1; j++)
+                    if (d[j] > d[j + 1]) {
+                        int temp = d[j];
+                        d[j] = d[j + 1];
+                        d[j + 1] = temp;
+                    }
+
+            // Place sorted diagonal elements back into the matrix
+            count = 0;
+            for (i = 0; i < m; i++)
+                for (j = 0; j < n; j++)
+                    if (i - j == diag_index)
+                        mat[i][j] = d[count++];
+        }
+
+        // Print the resulting matrix
+        for (i = 0; i < m; i++) {
+            for (j = 0; j < n; j++)
+                printf("%d ", mat[i][j]);
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
+
